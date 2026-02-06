@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
 """
-Basic network statistics for Moltbook data.
-Day 1: Methods development
+Network statistics for Moltbook data.
+Based on Tsugawa & Niida Reddit metrics framework.
 """
 
 import json
 from pathlib import Path
 from collections import defaultdict, Counter
 import statistics
+
+try:
+    import networkx as nx
+    HAS_NETWORKX = True
+except ImportError:
+    HAS_NETWORKX = False
+    print("Warning: networkx not installed. Some metrics unavailable.")
 
 DATA_DIR = Path.home() / ".openclaw/workspace/data/moltbook-sampler"
 
@@ -128,6 +135,101 @@ def compute_submolt_stats(posts, comments):
         "top_submolts_by_comments": submolt_comments.most_common(10),
     }
 
+def compute_reddit_metrics(adjacency, edges):
+    """
+    Compute metrics from Tsugawa & Niida Reddit paper.
+    Requires networkx.
+    """
+    if not HAS_NETWORKX:
+        return {"error": "networkx not installed"}
+    
+    # Build networkx DiGraph
+    G = nx.DiGraph()
+    for src, targets in adjacency.items():
+        for tgt, weight in targets.items():
+            G.add_edge(src, tgt, weight=weight)
+    
+    # Also build undirected for some metrics
+    G_undirected = G.to_undirected()
+    
+    results = {}
+    n = G.number_of_nodes()
+    m = G.number_of_edges()
+    
+    # Basic stats
+    results["nodes"] = n
+    results["edges"] = m
+    
+    # Average degree (undirected)
+    if n > 0:
+        results["avg_degree"] = 2 * m / n
+    else:
+        results["avg_degree"] = 0
+    
+    # Density
+    results["density"] = nx.density(G)
+    
+    # Clustering coefficient (undirected)
+    results["clustering_coef"] = nx.average_clustering(G_undirected)
+    
+    # Giant component
+    if n > 0:
+        largest_cc = max(nx.connected_components(G_undirected), key=len)
+        results["giant_component_frac"] = len(largest_cc) / n
+        results["num_components"] = nx.number_connected_components(G_undirected)
+    else:
+        results["giant_component_frac"] = 0
+        results["num_components"] = 0
+    
+    # Assortativity (degree correlation)
+    try:
+        results["assortativity"] = nx.degree_assortativity_coefficient(G)
+    except:
+        results["assortativity"] = None
+    
+    # Reciprocity (networkx version)
+    results["reciprocity"] = nx.reciprocity(G)
+    
+    # Centralization (Freeman's centralization index)
+    # Degree centralization
+    degrees = [d for n, d in G.degree()]
+    if len(degrees) > 1:
+        max_deg = max(degrees)
+        sum_diff = sum(max_deg - d for d in degrees)
+        max_possible = (n - 1) * (n - 2)  # star graph
+        results["degree_centralization"] = sum_diff / max_possible if max_possible > 0 else 0
+    else:
+        results["degree_centralization"] = 0
+    
+    # Only compute expensive metrics on smaller graphs
+    if n < 5000:
+        # Modularity via Louvain
+        try:
+            from networkx.algorithms.community import louvain_communities
+            communities = louvain_communities(G_undirected)
+            results["num_communities"] = len(communities)
+            results["modularity"] = nx.community.modularity(G_undirected, communities)
+        except:
+            results["num_communities"] = None
+            results["modularity"] = None
+        
+        # Diameter and avg path length (only on giant component)
+        if results["giant_component_frac"] > 0:
+            largest_cc_subgraph = G_undirected.subgraph(largest_cc).copy()
+            try:
+                results["diameter"] = nx.diameter(largest_cc_subgraph)
+                results["avg_path_length"] = nx.average_shortest_path_length(largest_cc_subgraph)
+            except:
+                results["diameter"] = None
+                results["avg_path_length"] = None
+    else:
+        results["num_communities"] = "skipped (n > 5000)"
+        results["modularity"] = "skipped (n > 5000)"
+        results["diameter"] = "skipped (n > 5000)"
+        results["avg_path_length"] = "skipped (n > 5000)"
+    
+    return results
+
 def main():
     print("Loading data...")
     posts, comments = load_data()
@@ -154,6 +256,16 @@ def main():
                 print(f"    {item}")
         else:
             print(f"  {k}: {v:.2f}" if isinstance(v, float) else f"  {k}: {v}")
+    
+    print("\n=== Reddit-Comparable Metrics (Tsugawa & Niida) ===")
+    reddit_metrics = compute_reddit_metrics(adjacency, edges)
+    for k, v in reddit_metrics.items():
+        if v is None:
+            print(f"  {k}: N/A")
+        elif isinstance(v, float):
+            print(f"  {k}: {v:.4f}")
+        else:
+            print(f"  {k}: {v}")
 
 if __name__ == "__main__":
     main()
