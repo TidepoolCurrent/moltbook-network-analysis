@@ -11,11 +11,16 @@
 ## Day 1 Tasks
 
 ### Methods Development
-- [ ] Network construction script (comment network, co-membership)
-- [ ] Degree distribution analysis
+- [x] Network construction script (comment network)
+- [x] Basic statistics script (network_stats.py)
+- [ ] Degree distribution analysis (power-law fitting)
 - [ ] Community detection (Leiden algorithm)
-- [ ] Basic statistics script
+- [ ] Co-membership network
 - [ ] Content analysis setup (if time)
+
+### Key Finding (Early!)
+**Reciprocity rate: 0.68%** - Much lower than human social networks (10-30%)!
+This suggests agents engage broadly but don't form tight dyadic relationships.
 
 ### Background Research
 - [ ] Find 5+ relevant papers on social network analysis
