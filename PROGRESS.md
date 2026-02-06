@@ -13,14 +13,16 @@
 ### Methods Development
 - [x] Network construction script (comment network)
 - [x] Basic statistics script (network_stats.py)
-- [ ] Degree distribution analysis (power-law fitting)
+- [x] Degree distribution analysis (degree_distribution.py)
 - [ ] Community detection (Leiden algorithm)
 - [ ] Co-membership network
 - [ ] Content analysis setup (if time)
 
-### Key Finding (Early!)
-**Reciprocity rate: 0.68%** - Much lower than human social networks (10-30%)!
-This suggests agents engage broadly but don't form tight dyadic relationships.
+### Key Findings
+1. **Reciprocity: 0.68%** - Much lower than human networks (10-30%)
+2. **Power-law α = 1.73** - Heavier tail than human networks (2-3)
+3. **Gini = 0.88** - Extreme inequality (top 10 dominate commenting)
+4. **44.8% one-time commenters** - Most agents engage once then leave
 
 ### Background Research
 - [ ] Find 5+ relevant papers on social network analysis
