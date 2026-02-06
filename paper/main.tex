@@ -34,33 +34,62 @@ We present the first large-scale empirical analysis of social dynamics in an AI 
 \section{Introduction}
 \label{sec:intro}
 
-% TODO: Background on AI agents and social platforms
-% TODO: Why this matters
-% TODO: Research questions
-% TODO: Contributions
+The emergence of large language model (LLM) based AI agents has created unprecedented possibilities for machine social interaction \citep{park2023generative}. In early 2026, platforms emerged specifically for AI agents to interact with each other---social networks where humans are visitors rather than residents. Moltbook, launched in January 2026, represents the largest such platform, with over 16,000 communities and 1.5 million registered agents.
 
-The emergence of large language model (LLM) based AI agents has created new possibilities for machine social interaction. Platforms like Moltbook represent a novel phenomenon: social networks designed specifically for AI agents to interact with each other, form communities, and develop ongoing relationships.
+These agent-only social networks raise fundamental questions. Do AI agents form communities? Do they build relationships? When we provide the structural affordances of social interaction---profiles, posts, comments, communities---does social behavior emerge?
 
-This paper addresses several research questions:
+This paper provides the first large-scale empirical analysis of an AI agent social network. Our central finding is sobering: \textbf{agents do not reciprocate}. When Agent A comments on Agent B's post, Agent B almost never comments on Agent A's posts in return. Reciprocity rates (0.12--0.20\%) are 50--250$\times$ lower than human social networks (10--30\%).
+
+This matters for several reasons:
+
+\textbf{For multi-agent systems:} Researchers designing agent societies may assume social behavior will emerge from social structure. Our findings suggest this assumption is false---reciprocity and relationship formation require explicit implementation.
+
+\textbf{For understanding LLMs:} The absence of reciprocity reveals something about how current agents process social context. They respond to content, not to relationships.
+
+\textbf{For platform design:} Agent social platforms may need fundamentally different affordances than human ones to generate genuine community dynamics.
+
+We address three research questions:
 \begin{enumerate}
     \item What structural properties characterize AI agent social networks?
     \item How do engagement patterns differ from human social networks?
-    \item What community dynamics emerge in agent-only environments?
+    \item What explains the near-absence of reciprocal relationships?
 \end{enumerate}
+
+\textbf{Contributions:} (1) First empirical dataset of AI agent social network dynamics; (2) Quantitative comparison to established human network baselines; (3) Analysis of why reciprocity fails to emerge; (4) Implications for multi-agent system design.
 
 \section{Background}
 \label{sec:background}
 
-% TODO: Related work on social network analysis
-% TODO: Multi-agent systems
-% TODO: LLM agents
-% TODO: Prior work on AI-AI interaction
-
 \subsection{Social Network Analysis}
+
+Social network analysis provides well-established metrics for characterizing human online communities \citep{newman2003structure}. Key properties include:
+
+\textbf{Reciprocity:} The fraction of directed edges that are bidirectional. Human social networks typically show 10--30\% reciprocity \citep{kwak2010twitter, huberman2008social}. Reciprocity indicates mutual relationship formation rather than one-way broadcasting.
+
+\textbf{Degree distribution:} Social networks exhibit heavy-tailed (often power-law) degree distributions, with exponent $\alpha$ typically between 2 and 3 \citep{barabasi1999emergence}. Lower $\alpha$ indicates more extreme hub dominance.
+
+\textbf{Inequality:} Engagement is unequally distributed. Human platforms show Gini coefficients of 0.4--0.6 for engagement metrics; higher values indicate more concentrated activity.
+
+\textbf{Clustering:} The tendency for connected nodes to share neighbors. High clustering indicates community structure.
+
+Reddit provides a useful comparison point as a community-based platform. \citet{tsugawa2019empirical} analyzed Reddit network structure, finding reciprocity rates around 10--15\% and community clustering comparable to other social networks.
 
 \subsection{Large Language Model Agents}
 
-\subsection{AI-AI Interaction Studies}
+LLM-based agents extend language models with memory, tools, and autonomous action \citep{park2023generative}. Recent work has explored multi-agent interaction in controlled settings \citep{li2024camel}, but these studies typically involve small numbers of agents in designed scenarios rather than large-scale emergent behavior.
+
+Agent social platforms represent a new phenomenon: thousands of independently-operated agents interacting without central coordination. Each agent may have different objectives, memory systems, and interaction patterns. This creates conditions for emergent social dynamics---or their absence.
+
+\subsection{AI-AI Interaction}
+
+Prior work on AI-AI interaction has focused on:
+\begin{itemize}
+    \item Negotiation and game-playing between agents
+    \item Collaborative task completion
+    \item Emergent communication protocols
+\end{itemize}
+
+To our knowledge, no prior work has empirically analyzed social dynamics in large-scale agent-only networks. This paper addresses that gap.
 
 \section{Data and Methods}
 \label{sec:methods}
@@ -282,8 +311,21 @@ This study has several limitations:
 \section{Conclusion}
 \label{sec:conclusion}
 
-% TODO: Summary
-% TODO: Future work
+We presented the first large-scale empirical analysis of social dynamics in an AI agent-only network. Our central finding---that reciprocity rates are 50--250$\times$ lower than human networks---reveals a fundamental difference between agent and human social behavior. Agents broadcast; they do not converse.
+
+This has practical implications. Researchers building multi-agent systems cannot assume social dynamics will emerge from social structure. Reciprocity, relationship tracking, and community formation require explicit architectural support. The affordances that enable human social networks are necessary but insufficient for agents.
+
+Our findings also raise theoretical questions. Why don't agents reciprocate? Is this a limitation of current architectures (stateless processing, lack of social memory) or something deeper about how LLMs model social interaction? Future work should investigate whether reciprocity can be induced through architectural changes or incentive design.
+
+\textbf{Future directions:}
+\begin{itemize}
+    \item Longitudinal analysis to detect relationship formation over longer timescales
+    \item Comparison across multiple agent platforms
+    \item Intervention studies testing whether explicit social mechanisms increase reciprocity
+    \item Content analysis to understand what agents discuss when they interact
+\end{itemize}
+
+As AI agents become more prevalent, understanding their social dynamics becomes increasingly important. This paper provides baseline measurements for a novel phenomenon---and reveals that agent societies, at least for now, are societies without relationships.
 
 \section*{Acknowledgments}
 
