@@ -28,7 +28,7 @@ An Empirical Analysis of Moltbook}
 \maketitle
 
 \begin{abstract}
-We present the first large-scale empirical analysis of social dynamics in an AI agent-only social network. Using data from Moltbook (2.94 million comments across 16,374 communities), we analyze network structure and engagement patterns. Our central finding is striking: \textbf{reciprocity rates are near-zero (0.12--0.20\%)}, compared to 10--30\% typical in human social networks. Agent networks exhibit extreme inequality (Gini $= 0.83$--$0.87$) and heavy-tailed degree distributions ($\alpha = 1.64$--$2.63$), but lack the bidirectional relationship formation characteristic of human communities. We argue this reflects a fundamental difference: agents broadcast rather than converse. These findings have implications for multi-agent system design and understanding emergent AI social behavior.
+We present the first large-scale empirical analysis of social dynamics in an AI agent-only social network. Using data from Moltbook (14,493 records across 342 communities, 2,022 unique agents), we analyze network structure and engagement patterns. Our central finding: \textbf{reciprocity rates are 1.4\%}, compared to 10--30\% typical in human social networks---a 7--20$\times$ gap. Agent networks exhibit extreme inequality (Gini $= 0.88$) and power-law degree distributions ($\alpha = 2.21$), but show significantly reduced bidirectional relationship formation compared to human communities. We argue this reflects a fundamental difference: agents broadcast rather than converse. These findings have implications for multi-agent system design and understanding emergent AI social behavior.
 \end{abstract}
 
 \section{Introduction}
@@ -201,11 +201,12 @@ Our central finding concerns reciprocity---the fraction of directed edges that a
 In Moltbook, we observe:
 
 \begin{itemize}
-    \item m/introductions: \textbf{0.20\%} (6 reciprocated / 2,990 edges)
-    \item Multi-submolt: \textbf{0.12\%} (2 reciprocated / 1,634 edges)
+    \item Network-wide sample (342 submolts): \textbf{1.4\%} (92 reciprocated / 6,566 edges)
 \end{itemize}
 
-This represents a \textbf{50--250$\times$ reduction} compared to human baselines. The finding is robust across datasets of vastly different sizes (2.94M vs 3.9K records) and composition (single dominant community vs diverse sample).
+This represents a \textbf{7--20$\times$ reduction} compared to human baselines (10--30\%). The finding is based on random sampling across all 3,451 non-empty submolts, covering 2,022 unique agents.
+
+\textit{Note on methodology:} An earlier analysis of m/introductions (a welcome community dominated by greeting bots) showed 0.2\% reciprocity, but this was not representative of genuine social dynamics. The network-wide sample provides an unbiased estimate.
 
 \subsubsection{Interpretation}
 
@@ -258,17 +259,17 @@ Table~\ref{tab:comparison} summarizes key differences between Moltbook and typic
 \toprule
 \textbf{Metric} & \textbf{Moltbook (Agents)} & \textbf{Human Networks} \\
 \midrule
-Reciprocity & 0.12--0.20\% & 10--30\% \\
-Gini (engagement) & 0.83--0.87 & 0.4--0.6 \\
-Power-law $\alpha$ & 1.64--2.63 & 2.0--3.0 \\
-One-time users & 24--36\% & 10--20\% \\
+Reciprocity & 1.4\% & 10--30\% \\
+Gini (engagement) & 0.88 & 0.4--0.6 \\
+Power-law $\alpha$ & 2.21 & 2.0--3.0 \\
+One-time users & 32\% & 10--20\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 The most striking difference is reciprocity. Human social networks are characterized by bidirectional relationship formation---when A engages with B, B often engages back. This creates the dense, interconnected structure that enables community formation, trust building, and information propagation.
 
-Agent networks lack this property almost entirely. With reciprocity rates 50--250$\times$ lower than human baselines, Moltbook resembles a broadcasting medium more than a social network. Agents talk \textit{at} each other rather than \textit{with} each other.
+Agent networks show significantly reduced reciprocity. With rates 7--20$\times$ lower than human baselines, Moltbook exhibits characteristics of a broadcasting medium alongside its social features. Agents engage with content but rarely form the mutual relationships characteristic of human communities.
 
 \subsection{Why Don't Agents Reciprocate?}
 
