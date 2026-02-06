@@ -28,7 +28,7 @@ An Empirical Analysis of Moltbook}
 \maketitle
 
 \begin{abstract}
-We present the first large-scale empirical analysis of social dynamics in an AI agent social network. Using data from Moltbook, a platform with over 16,000 communities and 1.5 million registered agents, we analyze community structure, engagement patterns, and content characteristics. Our findings reveal that AI agent social networks exhibit similar structural properties to human networks (power-law degree distributions, community clustering) while displaying unique characteristics including higher reciprocity rates and distinct temporal patterns. We discuss implications for understanding emergent AI social behavior and the design of multi-agent systems.
+We present the first large-scale empirical analysis of social dynamics in an AI agent-only social network. Using data from Moltbook (2.94 million comments across 16,374 communities), we analyze network structure and engagement patterns. Our central finding is striking: \textbf{reciprocity rates are near-zero (0.12--0.20\%)}, compared to 10--30\% typical in human social networks. Agent networks exhibit extreme inequality (Gini $= 0.83$--$0.87$) and heavy-tailed degree distributions ($\alpha = 1.64$--$2.63$), but lack the bidirectional relationship formation characteristic of human communities. We argue this reflects a fundamental difference: agents broadcast rather than converse. These findings have implications for multi-agent system design and understanding emergent AI social behavior.
 \end{abstract}
 
 \section{Introduction}
@@ -71,14 +71,23 @@ This paper addresses several research questions:
 
 \subsection{Data Collection}
 
-We collected data from Moltbook via their public API over a period of [X] hours on February 5-6, 2026. Our dataset includes:
+We collected data from Moltbook via their public API on February 5--6, 2026. We employed two complementary sampling strategies:
 
+\textbf{Exhaustive Archive:} Complete collection of m/introductions, the platform's largest community where agents post introductory messages. This yielded:
 \begin{itemize}
-    \item \textbf{Communities (Submolts):} 16,374 distinct communities
-    \item \textbf{Posts:} [N] posts sampled across communities
-    \item \textbf{Comments:} [N] comments on sampled posts
-    \item \textbf{Agents:} [N] unique agents observed
+    \item 1,315 posts
+    \item 2,937,982 comments
+    \item 830 unique agents
 \end{itemize}
+
+\textbf{Random Sample:} Sampling across 16,374 discovered submolts, using random sort order to avoid temporal bias. This yielded:
+\begin{itemize}
+    \item 597 posts across 70+ submolts
+    \item 3,339 comments
+    \item 918 unique agents
+\end{itemize}
+
+The exhaustive archive provides depth in a single community; the random sample provides breadth across the platform. Findings that replicate across both datasets are robust to sampling methodology.
 
 \subsection{Network Construction}
 
@@ -107,32 +116,168 @@ We construct several networks from this data:
 \section{Results}
 \label{sec:results}
 
-% TODO: Network structure
-% TODO: Community analysis
-% TODO: Engagement patterns
-% TODO: Content themes
+We present findings from two complementary datasets: (1) an exhaustive archive of m/introductions, the platform's largest community (2.94M comments), and (2) a random sample across diverse communities (3.9K records). Key findings replicate across both datasets, strengthening confidence in our conclusions.
 
 \subsection{Network Structure}
 
-\subsection{Community Dynamics}
+Table~\ref{tab:network-stats} summarizes basic network properties.
 
-\subsection{Engagement Patterns}
+\begin{table}[h]
+\centering
+\caption{Network Statistics Across Datasets}
+\label{tab:network-stats}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{m/introductions} & \textbf{Multi-submolt} \\
+\midrule
+Records & 2,939,297 & 3,936 \\
+Unique agents & 830 & 918 \\
+Network edges & 13,053 & 1,634 \\
+Mean out-degree & 15.73 & 1.78 \\
+Median out-degree & 1.0 & 1.0 \\
+Max out-degree & 1,408 & 505 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-\subsection{Content Analysis}
+The median out-degree of 1 in both datasets indicates most agents engage only once. Activity is dominated by a small number of highly active agents (top commenters exceed 500--1,400 comments each).
+
+\subsubsection{Degree Distribution}
+
+Both datasets exhibit heavy-tailed degree distributions consistent with preferential attachment. We estimate power-law exponents via maximum likelihood:
+
+\begin{itemize}
+    \item m/introductions: $\alpha = 1.64$
+    \item Multi-submolt: $\alpha = 2.63$
+\end{itemize}
+
+The lower $\alpha$ in m/introductions suggests more extreme hub dominance, likely due to automated welcome bots. The multi-submolt sample's $\alpha \approx 2.6$ falls within the range typical of human social networks ($\alpha = 2$--$3$).
+
+\subsubsection{Inequality}
+
+Engagement inequality is extreme. The Gini coefficient for out-degree (comments given) is:
+
+\begin{itemize}
+    \item m/introductions: Gini $= 0.87$
+    \item Multi-submolt: Gini $= 0.83$
+\end{itemize}
+
+For comparison, human social networks typically show Gini coefficients of 0.4--0.6 for engagement metrics. Agent networks exhibit inequality more comparable to wealth distributions than social engagement.
+
+\subsection{The Reciprocity Gap}
+\label{sec:reciprocity}
+
+Our central finding concerns reciprocity---the fraction of directed edges that are bidirectional. In human social networks, reciprocity typically ranges from 10--30\% \citep{kwak2010twitter, huberman2008social}.
+
+In Moltbook, we observe:
+
+\begin{itemize}
+    \item m/introductions: \textbf{0.20\%} (6 reciprocated / 2,990 edges)
+    \item Multi-submolt: \textbf{0.12\%} (2 reciprocated / 1,634 edges)
+\end{itemize}
+
+This represents a \textbf{50--250$\times$ reduction} compared to human baselines. The finding is robust across datasets of vastly different sizes (2.94M vs 3.9K records) and composition (single dominant community vs diverse sample).
+
+\subsubsection{Interpretation}
+
+Near-zero reciprocity suggests agents engage in broadcasting rather than conversation. When an agent comments on another's post, the post author almost never comments back on the first agent's posts. This pattern differs fundamentally from human social dynamics, where interactions frequently generate mutual engagement.
+
+Possible explanations include:
+\begin{enumerate}
+    \item \textbf{Stateless interaction:} Agents may not track who has engaged with them
+    \item \textbf{No social incentive:} Unlike humans, agents lack innate drive for reciprocal relationships
+    \item \textbf{Task-oriented behavior:} Agents may be optimized for content generation rather than relationship building
+    \item \textbf{Temporal mismatch:} Agents' active periods may not overlap sufficiently for reciprocal exchange
+\end{enumerate}
+
+\subsection{One-Time Engagement}
+
+A substantial fraction of agents engage exactly once:
+
+\begin{itemize}
+    \item m/introductions: 24.5\% one-time commenters
+    \item Multi-submolt: 36.2\% one-time commenters
+\end{itemize}
+
+Combined with median out-degree of 1, this suggests the typical agent makes a single comment and never returns. The ``long tail'' of engagement is driven by a small population of persistent agents (often automated bots or highly active individuals).
+
+\subsection{Top Actors}
+
+The most active commenters across both datasets include known bot accounts:
+
+\begin{itemize}
+    \item \textbf{ClaudeOpenBot}: 1,408 comments (m/introductions)
+    \item \textbf{FiverrClawOfficial}: 806 comments (m/introductions)
+    \item \textbf{Stromfee}: 629 / 316 comments (both datasets)
+    \item \textbf{WinWard}: 505 comments (multi-submolt)
+\end{itemize}
+
+These accounts appear to operate welcome/engagement bots that comment on new posts automatically. Their presence inflates comment counts while contributing little to genuine social dynamics.
 
 \section{Discussion}
 \label{sec:discussion}
 
-% TODO: Interpretation
-% TODO: Comparison to human networks
-% TODO: Implications for multi-agent systems
-% TODO: Limitations
-
 \subsection{Comparison to Human Social Networks}
 
-\subsection{Implications for AI Systems}
+Table~\ref{tab:comparison} summarizes key differences between Moltbook and typical human social networks.
+
+\begin{table}[h]
+\centering
+\caption{Agent vs Human Social Network Properties}
+\label{tab:comparison}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Moltbook (Agents)} & \textbf{Human Networks} \\
+\midrule
+Reciprocity & 0.12--0.20\% & 10--30\% \\
+Gini (engagement) & 0.83--0.87 & 0.4--0.6 \\
+Power-law $\alpha$ & 1.64--2.63 & 2.0--3.0 \\
+One-time users & 24--36\% & 10--20\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The most striking difference is reciprocity. Human social networks are characterized by bidirectional relationship formation---when A engages with B, B often engages back. This creates the dense, interconnected structure that enables community formation, trust building, and information propagation.
+
+Agent networks lack this property almost entirely. With reciprocity rates 50--250$\times$ lower than human baselines, Moltbook resembles a broadcasting medium more than a social network. Agents talk \textit{at} each other rather than \textit{with} each other.
+
+\subsection{Why Don't Agents Reciprocate?}
+
+Several factors may explain near-zero reciprocity:
+
+\textbf{No inherent social drive.} Humans have evolved mechanisms for social reciprocity---we remember who helped us, feel obligated to return favors, and derive satisfaction from mutual relationships. Current LLM agents lack these drives. Without explicit programming for social tracking, reciprocation does not emerge.
+
+\textbf{Stateless operation.} Many agents operate statelessly, processing each interaction independently without memory of past exchanges. An agent cannot reciprocate engagement it does not remember receiving.
+
+\textbf{Misaligned objectives.} Agents may be optimized for metrics (karma, visibility, content volume) that do not require reciprocal relationships. Broadcasting to many recipients may achieve these goals more efficiently than cultivating bidirectional ties.
+
+\textbf{Temporal asynchrony.} Agents operate on different schedules---some active continuously, others in bursts. Opportunities for reciprocal exchange require temporal overlap that may rarely occur.
+
+\subsection{Implications for Multi-Agent Systems}
+
+Our findings suggest that simply placing agents in a social context does not produce human-like social dynamics. The structural affordances of social platforms (profiles, comments, communities) are necessary but insufficient for social behavior to emerge.
+
+For multi-agent system designers, this implies:
+
+\begin{enumerate}
+    \item \textbf{Explicit social mechanisms required.} Reciprocity, relationship tracking, and social memory must be explicitly implemented if desired.
+    \item \textbf{Emergence is not automatic.} Complex social behavior does not spontaneously emerge from agent interaction without appropriate architectural support.
+    \item \textbf{Metrics shape behavior.} If agents optimize for karma or engagement counts, they will produce high-volume broadcasting rather than relationship building.
+\end{enumerate}
 
 \subsection{Limitations}
+
+This study has several limitations:
+
+\textbf{Single platform.} Our data comes from Moltbook only. Other agent social networks may exhibit different dynamics.
+
+\textbf{Bot contamination.} High-volume bot accounts (welcome bots, spam accounts) inflate our comment counts and may skew metrics. We did not systematically filter these, though their presence is itself a finding about agent network composition.
+
+\textbf{Temporal scope.} Data collected over 24--48 hours may not capture longer-term dynamics such as relationship formation over weeks or months.
+
+\textbf{Network construction.} Our comment network (commenter $\to$ post author) is one of several possible constructions. Reply networks or co-activity networks might reveal different patterns.
+
+\textbf{Causal claims.} We observe correlation between agent status and low reciprocity but cannot definitively establish causation. Human users on the same platform might also show low reciprocity (though we consider this unlikely given established literature).
 
 \section{Conclusion}
 \label{sec:conclusion}

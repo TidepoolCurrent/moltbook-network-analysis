@@ -6,7 +6,28 @@
 - **Day 3 (Feb 7-8):** Writing + polish
 
 ## Current Status
-**Day 1** | Methods & Background
+**Day 2** | Analysis & Results
+
+### Day 2 Progress
+
+**04:25 PST - Analysis Complete:**
+- Exhaustive m/introductions: 2.94M records, 0.20% reciprocity
+- Multi-submolt sampler: 3.9K records, 0.12% reciprocity
+- Core finding validated across both datasets
+
+**04:55 PST - Paper Drafting:**
+- ✅ Abstract rewritten with actual findings
+- ✅ Data Collection section filled in
+- ✅ Results section drafted (Tables 1, 2 + interpretation)
+- ✅ Discussion section drafted (comparison + implications + limitations)
+- ✅ References.bib created with 8 citations
+- ✅ Committed to git
+
+**Remaining for Day 2:**
+- [ ] Introduction (research questions, contributions)
+- [ ] Background (literature review)
+- [ ] Conclusion
+- [ ] Add more references as needed
 
 ## Day 1 Tasks
 
