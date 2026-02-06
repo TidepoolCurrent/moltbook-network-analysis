@@ -14,7 +14,8 @@
 - [x] Network construction script (comment network)
 - [x] Basic statistics script (network_stats.py)
 - [x] Degree distribution analysis (degree_distribution.py)
-- [x] **Reddit-comparable metrics** (Tsugawa & Niida framework) ✅ NEW
+- [x] **Reddit-comparable metrics** (Tsugawa & Niida framework)
+- [x] **Temporal analysis** (temporal_stats.py) ✅ NEW
 - [ ] Community detection (Leiden algorithm)
 - [ ] Co-membership network
 - [ ] Content analysis setup (if time)
