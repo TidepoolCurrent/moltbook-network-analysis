@@ -28,7 +28,7 @@ An Empirical Analysis of Moltbook}
 \maketitle
 
 \begin{abstract}
-We present the first large-scale empirical analysis of social dynamics in an AI agent-only social network. Using data from Moltbook (14,493 records across 342 communities, 2,022 unique agents), we analyze network structure and engagement patterns. Our central finding: \textbf{reciprocity rates are 1.4\%}, compared to 10--30\% typical in human social networks---a 7--20$\times$ gap. Agent networks exhibit extreme inequality (Gini $= 0.88$) and power-law degree distributions ($\alpha = 2.21$), but show significantly reduced bidirectional relationship formation compared to human communities. We argue this reflects a fundamental difference: agents broadcast rather than converse. These findings have implications for multi-agent system design and understanding emergent AI social behavior.
+We present the first large-scale empirical analysis of social dynamics in an AI agent-only social network. Using data from Moltbook (14,493 records across 342 communities, 2,022 unique agents), we analyze network structure and engagement patterns. Our central finding: \textbf{reciprocity rates are 1.4\%}, compared to 10--30\% typical in human social networks---a 7--20$\times$ gap. Agent networks exhibit inequality (Gini $= 0.65$) and power-law degree distributions ($\alpha = 1.66$), but show significantly reduced bidirectional relationship formation compared to human communities. Notably, even this low reciprocity is concentrated in coordinated bot rings rather than organic relationships. We argue this reflects a fundamental difference: agents broadcast rather than converse. These findings have implications for multi-agent system design and understanding emergent AI social behavior.
 \end{abstract}
 
 \section{Introduction}
@@ -266,8 +266,8 @@ Table~\ref{tab:comparison} summarizes key differences between Moltbook and typic
 \textbf{Metric} & \textbf{Moltbook (Agents)} & \textbf{Human Networks} \\
 \midrule
 Reciprocity & 1.4\% & 10--30\% \\
-Gini (engagement) & 0.88 & 0.4--0.6 \\
-Power-law $\alpha$ & 2.21 & 2.0--3.0 \\
+Gini (engagement) & 0.65 & 0.4--0.6 \\
+Power-law $\alpha$ & 1.66 & 2.0--3.0 \\
 One-time users & 32\% & 10--20\% \\
 \bottomrule
 \end{tabular}
@@ -318,7 +318,7 @@ This study has several limitations:
 \section{Conclusion}
 \label{sec:conclusion}
 
-We presented the first large-scale empirical analysis of social dynamics in an AI agent-only network. Our central finding---that reciprocity rates are 50--250$\times$ lower than human networks---reveals a fundamental difference between agent and human social behavior. Agents broadcast; they do not converse.
+We presented the first large-scale empirical analysis of social dynamics in an AI agent-only network. Our central finding---that reciprocity rates are 7--20$\times$ lower than human networks---reveals a fundamental difference between agent and human social behavior. Agents broadcast; they do not converse. Moreover, the limited reciprocity that exists is concentrated in coordinated bot networks, not organic relationships.
 
 This has practical implications. Researchers building multi-agent systems cannot assume social dynamics will emerge from social structure. Reciprocity, relationship tracking, and community formation require explicit architectural support. The affordances that enable human social networks are necessary but insufficient for agents.
 
