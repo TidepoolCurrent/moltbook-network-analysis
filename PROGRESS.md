@@ -43,9 +43,10 @@
 **Remaining for Day 3:**
 - [ ] Polish prose
 - [ ] Verify all citations
-- [ ] Add figures (degree distribution, network visualization)
+- [x] Add figures (degree distribution) ✅ 06:23 PST
+- [ ] Network visualization (optional)
 - [ ] Proofread
-- [ ] Submit to arxiv
+- [ ] Submit to arxiv (needs human review)
 
 ## Day 1 Tasks
 
